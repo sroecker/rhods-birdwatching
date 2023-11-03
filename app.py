@@ -48,5 +48,5 @@ if img_data is not None:
     raw_response = post(PREDICTION_URL, json=payload)
     print(raw_response.text)
     res = raw_response.json()
-    pred_class = default_class_labels[np.argmax(res['outputs'][0]['data'])+3]
+    pred_class = default_class_labels[np.argmax(res['outputs'][0]['data'])]
     st.write(f'Predicted class: {pred_class}')
