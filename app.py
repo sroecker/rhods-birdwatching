@@ -2,6 +2,7 @@ import numpy as np
 from requests import post
 from classes import default_class_labels
 import streamlit as st
+import torch
 import torchvision.transforms.functional as fn
 from torchvision.transforms import v2
 from PIL import Image
@@ -13,6 +14,11 @@ PREDICTION_URL = 'https://birds-birdwatching.apps.rhods-internal.61tk.p1.openshi
 def serialize_image(img):
     img_arr = fn.pil_to_tensor(img).unsqueeze(0)
     print(img_arr.shape)
+    print(img_arr[0][0][40])
+    # PIL to tensor converts to UINT8, we need to cast to FP32 and [0 1]
+    img_arr = img_arr.to(torch.float32)
+    img_arr /= 255
+    print(img_arr[0][0][40])
     payload = {
         'inputs': [
             {
